@@ -1,0 +1,12 @@
+version 2.0
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.7
+    pre_build:
+      commands:
+        - pip3 install virtualenv
+        - virtualenv ml-service
+        - source ml-service/bin/activate
+        - pip3 install -r requirements.txt
