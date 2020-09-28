@@ -8,14 +8,14 @@ from torchvision.transforms import ToTensor
 
 from file_ops import Net
 
-application = Flask(__name__)
+app = Flask(__name__)
 net = Net()
 net.load_state_dict(torch.load("./model.h5"))
 to_tensor = ToTensor()
-application.config["SECRET_KEY"] = "my_secret_key"
+app.config["SECRET_KEY"] = "my_secret_key"
 
 
-@application.route("/")
+@app.route("/")
 def home():
     result = None
     if "result" in session:
@@ -28,7 +28,7 @@ def home():
     return render_template("main.html", result=result)
 
 
-@application.route("/upload", methods=["POST"])
+@app.route("/upload", methods=["POST"])
 def upload_image():
     data = request.files["image"]
     bytes_io = BytesIO(data.stream.read())
@@ -42,10 +42,10 @@ def upload_image():
     return redirect(url_for('home'))
 
 
-@application.errorhandler(500)
+@app.errorhandler(500)
 def server_error(e):
     return render_template("error.html"), 500
 
 
 if __name__ == '__main__':
-    application.run()
+    app.run()
