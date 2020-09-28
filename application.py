@@ -1,8 +1,8 @@
 import base64
 from io import BytesIO
 
-from PIL import Image
 import torch
+from PIL import Image
 from flask import Flask, render_template, url_for, request, redirect, session
 from torchvision.transforms import ToTensor
 
@@ -35,9 +35,9 @@ def upload_image():
     image = Image.open(bytes_io)
     image_tensor = to_tensor(image)
     assert image_tensor.size() == (1, 28, 28)
-    image_tensor = torch.reshape(image_tensor, (1, 1, 28, 28))
+    image_tensor = image_tensor.reshape((1, 1, 28, 28))
     output = net(image_tensor)
-    session["result"] = torch.argmax(output).item()
+    session["result"] = output.argmax().item()
     session["image_string"] = base64.b64encode(bytes_io.getvalue()).decode('utf-8')
     return redirect(url_for('home'))
 
