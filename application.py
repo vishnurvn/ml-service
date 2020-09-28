@@ -1,9 +1,10 @@
-import torch
-from torchvision.transforms import ToTensor
-from flask import Flask, render_template, url_for, request, redirect, session
-from PIL import Image
-from io import BytesIO
 import base64
+from io import BytesIO
+
+from PIL import Image
+import torch
+from flask import Flask, render_template, url_for, request, redirect, session
+from torchvision.transforms import ToTensor
 
 from file_ops import Net
 
